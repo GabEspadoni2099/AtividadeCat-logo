@@ -1,0 +1,60 @@
+<%- include('partials/header.ejs') %>
+<link rel="stylesheet" href="/css/style.css">
+<body>
+    <%- include('partials/navbar.ejs') %>
+    <div class="container py-4">
+        <hr>
+        <h1 class="text-center text-primary">Cadastrar Produto</h1>
+        <hr>
+        <form action="/cadastrar" method="POST" class="mx-auto w-50">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Produto</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="preco" class="form-label">Preço</label>
+                <input type="number" step="0.01" class="form-control" id="preco" name="preco" required>
+            </div>
+            <div class="mb-3">
+                <label for="imagem" class="form-label">URL da Imagem</label>
+                <input type="text" class="form-control" id="imagem" name="imagem">
+            </div>
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </form>
+        <hr>
+    </div>
+
+</body>
+<%- include("partials/footer.ejs") %>
+
+        <hr>
+        <h3>Comentários:</h3>
+        <% if (cadastro && cadastro.comentarios && cadastro.comentarios.length > 0) { %>
+            <% cadastro.comentarios.forEach(comentario => { %>
+                <div class="card">
+                    <div class="card-body">
+                        <p><%= comentario.corpo %></p>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>Não há comentários para este produto.</p>
+        <% } %>
+
+        <hr>
+
+        <h3>Deixe um comentário:</h3>
+        <form method="POST" action="/comentar">
+            <textarea name="corpo" class="form-control" placeholder="Digite seu comentário..." required></textarea>
+            <input type="hidden" name="cadastroId" value="<%= cadastro.id %>">
+            <button type="submit" class="btn btn-success">Comentar</button>
+        </form>
+
+    </div>
+
+</body>
+<%- include("partials/footer.ejs") %>
